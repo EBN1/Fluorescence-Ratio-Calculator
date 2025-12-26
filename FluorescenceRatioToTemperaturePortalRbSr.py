@@ -357,6 +357,8 @@ def calculate_fluoresence_ratios( transition_1, transition_2, intensities):
 ########
 #Set up the rate equations
 ########
+Ts= np.arange(230,381,25)
+Ts= np.arange(313,316,1)
 
 #laser induced transitions
 if species == 'Sr':
@@ -608,7 +610,7 @@ if species == 'Rb':
 #Ts = np.sort(np.unique(np.concatenate([Approximate_Temperatures,[273,373] ])))
 #Ts_calibration_index = np.where( Ts == T_calibrate)[0][0]
 
-Ts= np.arange(230,381,25)
+
 ratios = []
 ratios1 = []
 ratios2 = []
