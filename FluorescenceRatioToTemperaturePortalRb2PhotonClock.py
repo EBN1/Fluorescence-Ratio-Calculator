@@ -30,7 +30,7 @@ os.chdir(r'C:\Users\ebn1\OneDrive - NIST\CoBRAS\Fluorescence-Ratio-Calculator') 
 #edit the location of the xlsx file containing the transition rates for the desired species, assumes these files are also in the current working directory, else do appropriate os operations
 transition_file ={
     'Sr':  'Sr1-transition-rates.xlsx',
-    'Rb':  'Rb1-transition-rates.xlsx',
+    'Rb':  'Rb1-transition-rates_ARC_append.xlsx',
     }
 
 state_file ={
@@ -44,7 +44,7 @@ headers = ['Initial Configuration',
            'Final term',
            'Final J',
            'Wavelength (nm)',
-           'Wavelength error (nm)',
+           'Wavelength uncertainty (nm)',
            'Wavelength w/uncertainty (nm)',
            'Matrix element (a.u)',
            'Matrix el. uncertainty (a.u)',
@@ -67,7 +67,7 @@ dtypes ={'Initial Configuration': 'str',
            'Final term': 'str',
            'Final J': 'int',
            'Wavelength (nm)': 'float',
-           'Wavelength error (nm)': 'float',
+           'Wavelength uncertainty (nm)': 'float',
            'Wavelength w/uncertainty (nm)': 'str',
            'Matrix element (a.u)' :'float',
            'Matrix el. uncertainty (a.u)':'float',
@@ -1407,3 +1407,33 @@ ax[0,2].set_title(r'$r_{\rm{760 nm, 740 nm}}^{(7\,^2\rm{P}_{3/2})}$')
 
 
 
+#%%
+poly_portal=np.array([[ 2.96322990e-11,  1.47580967e-11, -3.90583863e-13,
+        -2.00774098e-12],
+       [-4.16912879e-08, -3.19518080e-08,  6.91462715e-10,
+         2.46209468e-09],
+       [ 1.74699242e-05,  2.46984839e-05, -3.30462502e-07,
+        -1.24258623e-06],
+       [ 3.12576316e-03, -5.24692882e-03,  6.36393984e-05,
+         2.60666879e-04],
+       [-4.27485283e-01,  3.54481459e-01,  7.06549685e-01,
+         7.47952267e+00]])
+
+poly_portal_ARC = np.array([[ 3.42779349e-10,  1.48298406e-11, -5.66353619e-13,
+        -3.94141961e-12],
+       [-4.48131383e-07, -3.18638403e-08,  9.33846627e-10,
+         5.08836915e-09],
+       [ 2.10227397e-04,  2.46208006e-05, -4.17250554e-07,
+        -2.17450576e-06],
+       [-3.48980891e-02, -5.22793331e-03,  7.58800965e-05,
+         3.91191932e-04],
+       [ 1.72492778e+00,  3.52960344e-01,  7.05944166e-01,
+         7.47310531e+00]])
+
+for i in range(4):
+    plt.figure(i)
+    plt.plot(Ts, np.poly1d(poly_portal[i])(Ts))
+    plt.plot(Ts, np.poly1d(poly_portal_ARC[i])(Ts) )
+    plt.xlabel("T (K)")
+    plt.ylabel('ratio 740 nm/760 nm')
+    plt.title('Rb 6P excitation')
